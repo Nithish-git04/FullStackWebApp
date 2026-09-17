@@ -1,0 +1,313 @@
+/* ===== Claude-themed base styles ===== */
+
+:root {
+  --bg: #f7f5f2;
+  --bg-alt: #ffffff;
+  --ink: #292724;
+  --ink-soft: #746e65;
+  --accent: #c86f52;
+  --accent-hover: #a95840;
+  --accent-soft: #f3e2da;
+  --border: #ded9d2;
+  --error: #a8443d;
+  --error-bg: #faece9;
+  --radius: 6px;
+  --font-body: "Avenir Next", Avenir, "Segoe UI", sans-serif;
+  --font-head: Georgia, "Iowan Old Style", serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+/* ===== Typography ===== */
+
+h1, h2, h3 {
+  font-family: var(--font-head);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.25;
+}
+
+h1 {
+  font-size: 2rem;
+  margin: 0 0 1.25rem;
+}
+
+h2 {
+  font-size: 1.75rem;
+  margin: 2rem 0 0.8rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+
+h2:first-of-type {
+  margin-top: 0;
+}
+
+p {
+  color: var(--ink-soft);
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ===== Nav ===== */
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+nav a {
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+nav a:hover {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+nav button {
+  margin-left: auto;
+}
+
+/* ===== Forms ===== */
+
+form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 0.7rem;
+  margin-bottom: 1.25rem;
+}
+
+form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+
+/* label text sits directly before an input in your markup,
+   this keeps them visually paired without extra wrapper divs */
+label + input,
+label input {
+  margin-top: 0.35rem;
+}
+
+input, select, textarea {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-alt);
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+input[type="number"] {
+  width: 6rem;
+}
+
+/* ===== Buttons ===== */
+
+button {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.5rem 0.85rem;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+button:hover {
+  background: var(--accent-hover);
+}
+
+button:active {
+  background: var(--accent-hover);
+}
+
+button:disabled {
+  background: var(--border);
+  color: var(--ink-soft);
+  cursor: not-allowed;
+}
+
+/* secondary-feeling buttons (Edit) vs destructive (Delete) —
+   add class="btn-secondary" / class="btn-danger" in JSX if you want the distinction */
+button.btn-secondary {
+  background: transparent;
+  color: var(--ink-soft);
+  border: 1px solid var(--border);
+}
+
+button.btn-secondary:hover {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+button.btn-danger {
+  background: transparent;
+  color: var(--error);
+  border: 1px solid var(--error-bg);
+}
+
+button.btn-danger:hover {
+  background: var(--error-bg);
+}
+
+/* ===== Lists ===== */
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.7rem 0;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-width: 1px 0 0;
+  margin-bottom: 0;
+}
+
+li:last-child {
+  border-bottom: 1px solid var(--border);
+}
+
+li a {
+  color: var(--ink);
+  font-weight: 500;
+  flex: 1;
+}
+
+li a:hover {
+  color: var(--accent);
+}
+
+li button {
+  padding: 0.4rem 0.85rem;
+  font-size: 0.82rem;
+}
+
+/* edit-mode row: input grows to fill the row */
+li input {
+  flex: 1;
+}
+
+/* ===== Errors ===== */
+
+p:has(+ form),
+form + p,
+li p,
+li + p {
+  color: var(--error);
+}
+
+/* generic error text pattern you're using: <p>Error...</p> */
+p:only-child:not(:first-child) {
+  color: inherit;
+}
+
+.error, [class*="error"] {
+  color: var(--error);
+  background: var(--error-bg);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+}
+
+/* ===== Detail pages ===== */
+
+section, .detail-card {
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius);
+  padding: 0;
+  margin-bottom: 1.25rem;
+}
+
+@media (max-width: 600px) {
+  #root {
+    padding: 1.25rem 1rem 3rem;
+  }
+
+  nav {
+    gap: 0.8rem;
+    flex-wrap: wrap;
+  }
+
+  nav button {
+    margin-left: 0;
+  }
+
+  form {
+    align-items: stretch;
+  }
+
+  form label,
+  form input,
+  form select,
+  form textarea {
+    width: 100%;
+  }
+
+  li {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  li a {
+    min-width: 100%;
+  }
+}

@@ -1,0 +1,66 @@
+<div id="input-details" style="display: flex; align-items: center; flex-direction: column; row-gap: 5px;">
+    <div>
+        <label for="username">Username: </label>
+        <input id="username" placeholder="Enter the Username" name="username" type="text">
+    </div>
+    <div>
+        <label for="password">Password: </label>
+        <input id="password" placeholder="Enter the password" name="password" type="text">
+    </div>
+    
+    <button id="login">Login</button>
+    <button id="signup">or click here to signup</button>
+</div>
+
+<div id="crea-stu-div" style="display: none; flex-direction: column">
+    <form style="display: flex; align-items: center; flex-direction: column; row-gap: 5px;">
+        <h3>CREATE A STUDENT ENTRY</h3>
+        <span style="display: flex; flex-direction: row;">
+        <label for="create-user">Name:  </label>
+        <input id="create-user" type="text" placeholder="Enter the name of the student">
+        </span>
+        <button id="create-user-btn" type="button">Create</button>
+    </form>
+</div>
+
+<div id="crea-cour-div" style="display: none; flex-direction: column">
+    <form style="display: flex; align-items: center; flex-direction: column; row-gap: 5px;">
+        <h3>CREATE A COURSE</h3>
+        <span style="display: flex; flex-direction: row;">
+        <label for="create-course">Name:  </label>
+        <input id="create-course" type="text" placeholder="Enter the name of the course">
+        </span>
+        <button id="create-course-btn" type="button">Create</button>
+    </form>
+</div>
+
+<div id="crea-enroll-div" style="display: none; flex-direction: column">
+    <form style="display: flex; align-items: center; flex-direction: column; row-gap: 5px;">
+        <h3>ENROLL A STUDENT</h3>
+        <span style="display: flex; flex-direction: row;">
+        <label for="stu-id-inp">Student ID:</label>
+        <input id="stu-id-inp" type="text" placeholder="Enter the student ID">
+        </span>
+        <span style="display: flex; flex-direction: row;">
+        <label for="cour-id-inp">Course ID:</label>
+        <input id="cour-id-inp" type="text" placeholder="Enter the course ID">
+        </span>
+        <span style="display: flex; flex-direction: row;">
+        <label for="grade-inp">Grade:</label>
+        <input id="grade-inp" type="number" placeholder="Enter the student's grade">
+        </span>
+        <button id="enroll-btn" type="button">Create</button>
+    </form>
+</div>
+
+<div id="main-div"></div>
+<div id="stu-div"></div>
+<div id="cour-div"></div>
+<div id="enroll-div"></div>
+<div id="all-stu-div"></div>
+<div id="stu-enr-div"></div>
+<div id="all-cour-div"></div>
+<div id="enr-stu-div"></div>
+
+
+<script src="main.js" type="module"></script>

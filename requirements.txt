@@ -1,0 +1,8 @@
+fastapi
+sqlmodel
+uvicorn
+pydantic_settings
+pwdlib
+pwdlib[argon2]
+PyJWT
+python-multipart
