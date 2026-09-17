@@ -1,19 +1,27 @@
+#env variables
 .env
 .env.*
 
+#python cache
 __pycache__/
 
+#python virt env
 .venv/
 venv/
 env/
 
-.ruff_cache/
-
+#node libr modules
 node_modules/
 
 dist/
 build/
 
+#local database
 *.db
 
+#vsc config files
 .vscode/
+
+#pytest
+.pytest_cache
+.cache
