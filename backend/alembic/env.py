@@ -9,9 +9,21 @@ from sqlalchemy import engine_from_config, pool
 # access to the values within the .ini file in use.
 config = context.config
 database_url = settings.database_url
+
+# The application uses the async SQLite driver (aiosqlite).
+# Alembic env.py currently uses SQLAlchemy synchronous
+# engine_from_config(), so Alembic needs the synchronous
+# SQLite URL.
+if database_url.startswith("sqlite+aiosqlite://"):
+    database_url = database_url.replace(
+        "sqlite+aiosqlite://",
+        "sqlite://",
+        1,
+    )
+
 config.set_main_option(
-    "sqlalchemy.url", 
-    database_url
+    "sqlalchemy.url",
+    database_url,
 )
 
 
