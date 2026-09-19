@@ -1,0 +1,26 @@
+services:
+  db:
+    image: postgres:16
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: nithish
+      POSTGRES_PASSWORD: devpassword
+      POSTGRES_DB: studentsdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  backend:
+    build: .                       
+    image: studentsdb-backend
+    container_name: studentsdb-backend
+    depends_on:
+      - db                         
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env     
+
+volumes:
+  pgdata:
