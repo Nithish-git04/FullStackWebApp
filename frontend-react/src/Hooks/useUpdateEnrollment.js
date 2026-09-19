@@ -5,7 +5,7 @@ export function useUpdateEnrollment() {
     const queryClient = useQueryClient()
 
     return useMutation({
-        mutationFn: ({ enrollmentId, studentId, courseId, grade }) => apiFetch(`http://localhost:8000/enrollments/${enrollmentId}`, {
+        mutationFn: ({ enrollmentId, studentId, courseId, grade }) => apiFetch(`${import.meta.env.VITE_API_URL}/enrollments/${enrollmentId}`, {
             method: "PUT",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({

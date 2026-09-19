@@ -4,7 +4,7 @@ import apiFetch from "../api"
 export function useLogin() {
     return useMutation({
         mutationFn: ({ username, password }) => {
-            return apiFetch("http://localhost:8000/auth/token", {
+            return apiFetch(`${import.meta.env.VITE_API_URL}/auth/token`, {
                 method: "POST",
                 headers: {"Content-Type" : "application/x-www-form-urlencoded"},
                 body: new URLSearchParams({ username, password })

@@ -5,7 +5,7 @@ export function useStudent(id) {
 
     const { data : student, error : errorStud } = useQuery({
         queryKey: ["student", id],
-        queryFn: () => apiFetch(`http://localhost:8000/students/${id}`).then((res) => {
+        queryFn: () => apiFetch(`${import.meta.env.VITE_API_URL}/students/${id}`).then((res) => {
             if (!res.ok) throw new Error(`Error while fetching the student. Err: ${res.status}`)
             return res.json()
         })
@@ -13,7 +13,7 @@ export function useStudent(id) {
 
     const { data : courses, error : errorCour } = useQuery({
         queryKey: ["student", id, "courses"],
-        queryFn: () => apiFetch(`http://localhost:8000/students/${id}/courses`).then((res) => {
+        queryFn: () => apiFetch(`${import.meta.env.VITE_API_URL}/students/${id}/courses`).then((res) => {
             if (!res.ok) throw new Error(`Error while fetching the registered courses. Err: ${res.status}`)
             return res.json()
         })

@@ -1,3 +1,4 @@
+from pydantic import computed_field
 from sqlmodel import Field, Relationship, SQLModel
 
 
@@ -5,6 +6,7 @@ from sqlmodel import Field, Relationship, SQLModel
 class StudentBase(SQLModel):
     name: str = Field(min_length = 2, max_length = 100)
     email: str | None = None
+    phone_number: str | None = None
 class StudentIn(StudentBase):
     pass
 class StudentOut(StudentBase):
@@ -17,6 +19,10 @@ class Student(StudentBase, table = True):
 #course model
 class CourseBase(SQLModel):
     name : str = Field(min_length = 1, max_length = 100)
+    instructor_name: str
+    department: str = Field(min_length = 1, max_length = 100)
+    credits: int = Field(ge = 1, le = 10)
+    max_capacity: int = Field(ge = 1)
 class CourseIn(CourseBase):
     pass
 class CourseOut(CourseBase):
@@ -24,6 +30,18 @@ class CourseOut(CourseBase):
 class Course(CourseBase, table = True):
     id : int | None = Field(default = None, primary_key = True)
     enrollments : list["Enrollment"] = Relationship(back_populates = "course")
+
+
+def grade_to_letter(grade: float) -> str:
+    if grade >= 90:
+        return "A"
+    if grade >= 80:
+        return "B"
+    if grade >= 70:
+        return "C"
+    if grade >= 60:
+        return "D"
+    return "F"
 
 
 #enrollment model
@@ -35,6 +53,11 @@ class EnrollmentIn(EnrollmentBase):
     pass
 class EnrollmentOut(EnrollmentBase):
     id : int | None = None
+
+    @computed_field
+    @property
+    def letter_grade(self) -> str:
+        return grade_to_letter(self.grade)
 class EnrollmentWithStudent(EnrollmentOut):
     student : StudentOut
 class EnrollmentWithCourse(EnrollmentOut):

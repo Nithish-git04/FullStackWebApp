@@ -19,7 +19,7 @@ function CourseDetailPage() {
                 <p>Error fetching Course</p>
             ) : (
                 <ul>
-                    <li key={course.id}>{`Name: ${course.name}, Id: ${id}`}</li>
+                    <li key={course.id}>{`Name: ${course.name}, Id: ${id}, Instructor: ${course.instructor_name}, Department: ${course.department}, Credits: ${course.credits}, Capacity: ${course.max_capacity}`}</li>
                 </ul>
             )}
 
@@ -33,7 +33,7 @@ function CourseDetailPage() {
                         <li>No registrations yet</li>
                     ) : (
                         students.map((enrollment) => (
-                            <li key={enrollment.id}>{`Student ID: ${enrollment.student_id} -> ${enrollment.student.name} -> Grade: ${enrollment.grade}`}</li>
+                            <li key={enrollment.id}>{`Student ID: ${enrollment.student_id} -> ${enrollment.student.name} -> Grade: ${enrollment.grade} (${enrollment.letter_grade})`}</li>
                         ))
                     )}
                 </ul>

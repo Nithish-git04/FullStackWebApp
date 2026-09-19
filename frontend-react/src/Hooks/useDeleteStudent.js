@@ -5,7 +5,7 @@ export function useDeleteStudent() {
     const queryClient = useQueryClient()
 
     return useMutation({
-        mutationFn: (studentId) => apiFetch(`http://localhost:8000/students/${studentId}`, {
+        mutationFn: (studentId) => apiFetch(`${import.meta.env.VITE_API_URL}/students/${studentId}`, {
             method : "DELETE",
         }).then((res) => {
             if(!res.ok) throw new Error(`Failed to delete the student. Err: ${res.status}`)

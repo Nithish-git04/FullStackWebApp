@@ -13,7 +13,7 @@ function StudentList({ students }) {
 
     function onSubmit(formData) {
         updateStudent(
-            { studentId: editingId, name: formData.name },
+            { studentId: editingId, name: formData.name, email: formData.email, phone_number: formData.phone_number },
             { onSuccess: () => {
                 setEditingId(null);
                 reset();
@@ -24,13 +24,15 @@ function StudentList({ students }) {
     return (
         <ul>
             {(students.length === 0) ? 
-                <li> "No students yet" </li> : 
+                <li> No students yet </li> : 
                 students.map((student) => (
                     <li key={student.id}>
                     {editingId === student.id ? (
                         <>  
                             <form onSubmit={handleSubmit(onSubmit)}>
                                 <input {...register("name")}/>
+                                <input type="email" {...register("email")}/>
+                                <input type="tel" {...register("phone_number")}/>
                                 <button type="submit">Save</button>
                                 <button type="button" onClick={() => { setEditingId(null); reset(); }}>
                                     Cancel
@@ -39,8 +41,8 @@ function StudentList({ students }) {
                         </>
                     ) : (
                         <>
-                            <Link to={`/students/${student.id}`}>{`Name: ${student.name}`}</Link>
-                            <button onClick={() => { setEditingId(student.id); reset({ name: student.name }); }}>
+                            <Link to={`/students/${student.id}`}>{`Name: ${student.name}${student.email ? `, Email: ${student.email}` : ""}${student.phone_number ? `, Phone: ${student.phone_number}` : ""}`}</Link>
+                            <button onClick={() => { setEditingId(student.id); reset({ name: student.name, email: student.email, phone_number: student.phone_number }); }}>
                                 Edit
                             </button>
                         </>

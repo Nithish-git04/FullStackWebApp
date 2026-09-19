@@ -74,18 +74,36 @@ export async function signIn(username, password) {
         });
         createStuBtn.addEventListener("click", () => {
             const nameInput = document.querySelector("#create-user");
+            const emailInput = document.querySelector("#create-user-email");
+            const phoneInput = document.querySelector("#create-user-phone");
             const name = nameInput.value;
-            
-            createEntity(name, responseData.access_token, "students", getAllStudents);
+            const email = emailInput.value;
+            const phone_number = phoneInput.value;
+
+            createEntity({name, email : email || null, phone_number : phone_number || null}, responseData.access_token, "students", getAllStudents);
             document.querySelector("#create-user").value = "";
+            document.querySelector("#create-user-email").value = "";
+            document.querySelector("#create-user-phone").value = "";
 
         });
         createCourBtn.addEventListener("click", () => {
             const nameInput = document.querySelector("#create-course");
+            const instructorInput = document.querySelector("#create-course-instructor");
+            const departmentInput = document.querySelector("#create-course-department");
+            const creditsInput = document.querySelector("#create-course-credits");
+            const capacityInput = document.querySelector("#create-course-capacity");
             const name = nameInput.value;
-            
-            createEntity(name, responseData.access_token, "courses", getAllCourses);
+            const instructor_name = instructorInput.value;
+            const department = departmentInput.value;
+            const credits = Number(creditsInput.value);
+            const max_capacity = Number(capacityInput.value);
+
+            createEntity({name, instructor_name, department, credits, max_capacity}, responseData.access_token, "courses", getAllCourses);
             document.querySelector("#create-course").value = "";
+            document.querySelector("#create-course-instructor").value = "";
+            document.querySelector("#create-course-department").value = "";
+            document.querySelector("#create-course-credits").value = "";
+            document.querySelector("#create-course-capacity").value = "";
         });
 
     } catch(err) {

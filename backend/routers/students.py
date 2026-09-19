@@ -17,7 +17,7 @@ router = APIRouter(prefix = "/students", tags = ["students"])
 
 @router.post("/", response_model = StudentOut, status_code = 201)
 async def create_student(student : StudentIn, session: AsyncSession = Depends(get_session), current_user : User = Depends(get_current_user)):
-    new_student = Student(name=student.name)
+    new_student = Student(name=student.name, email=student.email, phone_number=student.phone_number)
     session.add(new_student)
     await session.commit()
     await session.refresh(new_student)
@@ -36,6 +36,8 @@ async def update_student(student_id : int, student : StudentIn, session: AsyncSe
     if not db_student:
         raise HTTPException(status_code = 404, detail = "The id does not exist")
     db_student.name = student.name
+    db_student.email = student.email
+    db_student.phone_number = student.phone_number
     session.add(db_student)
     await session.commit()
     await session.refresh(db_student)

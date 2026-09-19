@@ -5,7 +5,7 @@ export function useDeleteEnrollment() {
     const queryClient = useQueryClient()
 
     return useMutation({
-        mutationFn: (enrollmentId) => apiFetch(`http://localhost:8000/enrollments/${enrollmentId}`, {
+        mutationFn: (enrollmentId) => apiFetch(`${import.meta.env.VITE_API_URL}/enrollments/${enrollmentId}`, {
             method: "DELETE"
         }).then((res) => {
             if(!res.ok) throw new Error(`Failed to delete the enrollment. Err: ${res.status}`)

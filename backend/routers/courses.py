@@ -11,7 +11,11 @@ router = APIRouter(prefix = "/courses", tags = ["courses"])
 @router.post("/", status_code = 201, response_model = CourseOut)
 async def create_course(course : CourseIn, session : AsyncSession = Depends(get_session), current_user : User = Depends(get_current_user)):
     new_course = Course(
-        name = course.name
+        name = course.name,
+        instructor_name = course.instructor_name,
+        department = course.department,
+        credits = course.credits,
+        max_capacity = course.max_capacity
     )
     session.add(new_course)
     await session.commit()
@@ -31,6 +35,10 @@ async def update_course(course_id : int, course : CourseIn, session : AsyncSessi
     if not db_course:
         raise HTTPException(status_code = 404, detail = "The course ID doesnt exist")
     db_course.name = course.name
+    db_course.instructor_name = course.instructor_name
+    db_course.department = course.department
+    db_course.credits = course.credits
+    db_course.max_capacity = course.max_capacity
     session.add(db_course)
     await session.commit()
     await session.refresh(db_course)

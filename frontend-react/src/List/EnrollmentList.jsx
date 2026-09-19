@@ -48,7 +48,7 @@ function EnrollmentList({ enrollments }) {
                             </form>
                         ) : (
                             <>
-                                {`Student with the ID ${enrollment.student_id} has registered the course with the ID ${enrollment.course_id} and has a grade ${enrollment.grade}`}
+                                {`Student with the ID ${enrollment.student_id} has registered the course with the ID ${enrollment.course_id} and has a grade ${enrollment.grade} (${enrollment.letter_grade})`}
                                 <button onClick={() => {
                                     setEditId(enrollment.id);
                                     reset({

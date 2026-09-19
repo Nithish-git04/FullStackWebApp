@@ -9,6 +9,7 @@ import LoginPage from "./Page/LoginPage"
 import ProtectedRoute from "./ProtectedRoute"
 import { useContext } from "react"
 import { AuthContext } from "./AuthContext"
+import SignupPage from "./Page/SignupPage"
 
 function App() {
 
@@ -31,9 +32,11 @@ function App() {
         ) : (
           <Link to="/">Login</Link>
         )}
+        <Link to="/signup">Signup</Link>
       </nav>
 
       <Routes>
+        <Route path="/signup" element={<SignupPage />}/>
         <Route path="/" element={<LoginPage />}/>
         <Route path="/students/:id" element={<ProtectedRoute><StudentDetailPage /></ProtectedRoute>} />
         <Route path="/courses/:id" element={<ProtectedRoute><CourseDetailPage /></ProtectedRoute>} />

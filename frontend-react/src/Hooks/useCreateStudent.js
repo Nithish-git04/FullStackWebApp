@@ -5,7 +5,7 @@ export function useCreateStudent() {
     const queryClient = useQueryClient()
 
     return useMutation({
-        mutationFn: (newStudent) => apiFetch("http://localhost:8000/students/", {
+        mutationFn: (newStudent) => apiFetch(`${import.meta.env.VITE_API_URL}/students/`, {
             method : "POST",
             headers : {"Content-Type" : "application/json"},
             body : JSON.stringify(newStudent)

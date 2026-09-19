@@ -25,6 +25,12 @@ async def create_entry(enrollment : EnrollmentIn, session : AsyncSession = Depen
     if(existing_enrollment):
         raise HTTPException(status_code = 400, detail = "The student is already enrolled in that course")
 
+    course_enrollments = await session.exec(
+        select(Enrollment).where(Enrollment.course_id == enrollment.course_id)
+    )
+    if len(course_enrollments.all()) >= db_course_id.max_capacity:
+        raise HTTPException(status_code = 400, detail = "The course has reached its maximum capacity")
+
     new_enrollment = Enrollment(
         grade = enrollment.grade, 
         student_id = enrollment.student_id, 
@@ -52,6 +58,13 @@ async def update_entry(enrollment_id : int, enrollment : EnrollmentIn, session :
     db_course_id = await session.get(Course, enrollment.course_id)
     if not (db_course_id and db_student_id):
         raise HTTPException(status_code = 404, detail = "Either student ID or course ID doesnt exist")
+
+    if enrollment.course_id != db_enrollment.course_id:
+        course_enrollments = await session.exec(
+            select(Enrollment).where(Enrollment.course_id == enrollment.course_id)
+        )
+        if len(course_enrollments.all()) >= db_course_id.max_capacity:
+            raise HTTPException(status_code = 400, detail = "The course has reached its maximum capacity")
 
     db_enrollment.grade = enrollment.grade
     db_enrollment.student_id = enrollment.student_id

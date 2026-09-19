@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 export function useCourses() {
     const { data, isLoading, error } = useQuery({
         queryKey: ["courses"],
-        queryFn: () => apiFetch('http://localhost:8000/courses/').then(res => {
+        queryFn: () => apiFetch(`${import.meta.env.VITE_API_URL}/courses/`).then(res => {
             if (!res.ok) throw new Error(`Failed to fetch courses. Err: (${res.status})`)
             return res.json()
         })

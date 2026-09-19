@@ -19,13 +19,11 @@ async function getStudent(id, token) {
 
 }
 
-export async function createEntity(name, token, entity, func) {
+export async function createEntity(data, token, entity, func) {
     try {
-        
+
         showLoading("#main-div");
 
-        const data = {"name" : name};
-        
         const response = await fetch(`${BASEURL}${entity}/`, {
             method : "POST",
             headers : {
@@ -82,7 +80,7 @@ async function getStudentEnrollments(id, token, name) {
                 tempDiv.dataset.id = item.id;
 
                 course_id.textContent = "Course ID: " + item.course_id;
-                grade.textContent = "Grade: " + item.grade;
+                grade.textContent = "Grade: " + item.grade + " (" + item.letter_grade + ")";
 
                 enrUl.appendChild(course_id);
                 enrUl.appendChild(grade);
@@ -141,7 +139,7 @@ export async function getAllStudents(token) {
         if(responseData.length !== 0) {
             responseData.forEach(item => {
                 const tempListItem = document.createElement('li');
-                tempListItem.textContent = `${item.id} : ${item.name}`;
+                tempListItem.textContent = `${item.id} : ${item.name}${item.email ? ` (${item.email})` : ""}${item.phone_number ? ` [${item.phone_number}]` : ""}`;
                 tempListItem.dataset.id = item.id;
 
                 tempListItem.addEventListener("click", () => {
@@ -224,7 +222,7 @@ async function getEnrolledStudents(id, token, name) {
                 tempDiv.dataset.id = item.id;
 
                 stuId.textContent = `Student ID: ${item.student_id}`;
-                grade.textContent = `Grade : ${item.grade}`;
+                grade.textContent = `Grade : ${item.grade} (${item.letter_grade})`;
 
                 enrUl.appendChild(stuId);
                 enrUl.appendChild(grade);
@@ -283,7 +281,7 @@ export async function getAllCourses(token) {
         if(responseData.length !== 0) {
             responseData.forEach(item => {
                 const tempListItem = document.createElement('li');
-                tempListItem.textContent = `${item.id} : ${item.name}`;
+                tempListItem.textContent = `${item.id} : ${item.name} (Instructor: ${item.instructor_name}, Dept: ${item.department}, Credits: ${item.credits}, Capacity: ${item.max_capacity})`;
                 tempListItem.dataset.id = item.id;
 
                 tempListItem.addEventListener("click", () => {

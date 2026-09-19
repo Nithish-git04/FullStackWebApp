@@ -13,7 +13,14 @@ function CourseList({ courses }) {
 
     function onSubmit(formData) {
         updateCourse(
-            { courseId: editId, name: formData.name },
+            {
+                courseId: editId,
+                name: formData.name,
+                instructor_name: formData.instructor_name,
+                department: formData.department,
+                credits: formData.credits,
+                max_capacity: formData.max_capacity
+            },
             {
                 onSuccess: () => {
                     setEditId(null);
@@ -26,13 +33,17 @@ function CourseList({ courses }) {
     return (
         <ul>
             {courses.length === 0 ? 
-                <li> "No courses yet" </li> :
+                <li> No courses yet </li> :
                 courses.map((course) => (
                     <li key = {course.id}>
                         {editId === course.id ? (
                             <>  
                                 <form onSubmit={handleSubmit(onSubmit)}>
                                     <input {...register("name")}/>
+                                    <input {...register("instructor_name")}/>
+                                    <input {...register("department")}/>
+                                    <input type="number" min="1" max="10" {...register("credits")}/>
+                                    <input type="number" min="1" {...register("max_capacity")}/>
                                     <button type="submit">Save</button>
                                     <button type="button" onClick={() => { setEditId(null); reset(); }}>
                                         Cancel
@@ -41,8 +52,8 @@ function CourseList({ courses }) {
                             </>
                         ) : (
                             <>
-                                <Link to={`/courses/${course.id}`}>{`Course: ${course.name}`}</Link>
-                                <button onClick={() => { setEditId(course.id); reset({ name: course.name }); }}>
+                                <Link to={`/courses/${course.id}`}>{`Course: ${course.name}, Instructor: ${course.instructor_name}, Dept: ${course.department}, Credits: ${course.credits}, Capacity: ${course.max_capacity}`}</Link>
+                                <button onClick={() => { setEditId(course.id); reset({ name: course.name, instructor_name: course.instructor_name, department: course.department, credits: course.credits, max_capacity: course.max_capacity }); }}>
                                     Edit
                                 </button>
                             </>
