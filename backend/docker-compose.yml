@@ -13,8 +13,8 @@ services:
 
   backend:
     build: .                       
-    image: studentsdb-backend
-    container_name: studentsdb-backend
+    image: backend-fastapi
+    container_name: backend-fastapi
     depends_on:
       - db                         
     ports:
@@ -22,5 +22,15 @@ services:
     env_file:
       - .env     
 
+  frontend-react:
+    build:
+      context: ../frontend-react
+      args:
+        VITE_API_URL: http://localhost:8000
+    image: frontend-react
+    container_name: frontend-react
+    ports:
+      - "3000:80"
+    
 volumes:
   pgdata:
