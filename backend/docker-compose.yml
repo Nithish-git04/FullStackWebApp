@@ -37,6 +37,8 @@ services:
       context: ../frontend-vanillaJS
     image: frontend-vanillajs
     container_name: frontend-vanillajs
+    environment:
+      API_URL: http://127.0.0.1:8000/
     ports:
       - "3001:80"
     
