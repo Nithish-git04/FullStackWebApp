@@ -5,6 +5,46 @@ async def test_create_student(client):
     assert response.status_code == 201
     data = response.json()
     assert data["name"] == "Test Student"
+    assert data["email"] is None
+    assert data["phone_number"] is None
+
+async def test_create_student_with_email(client):
+    response = await client.post(
+        "/students/", json={"name": "Test Student", "email": "test@example.com"}
+    )
+    assert response.status_code == 201
+    data = response.json()
+    assert data["email"] == "test@example.com"
+
+async def test_create_student_with_phone_number(client):
+    response = await client.post(
+        "/students/", json={"name": "Test Student", "phone_number": "+1-555-0100"}
+    )
+    assert response.status_code == 201
+    data = response.json()
+    assert data["phone_number"] == "+1-555-0100"
+
+async def test_update_student_email(client):
+    post_response = await client.post("/students/", json={"name": "Test Student"})
+    student_id = post_response.json()["id"]
+
+    response = await client.put(
+        f"/students/{student_id}",
+        json={"name": "Test Student", "email": "updated@example.com"},
+    )
+    assert response.status_code == 200
+    assert response.json()["email"] == "updated@example.com"
+
+async def test_update_student_phone_number(client):
+    post_response = await client.post("/students/", json={"name": "Test Student"})
+    student_id = post_response.json()["id"]
+
+    response = await client.put(
+        f"/students/{student_id}",
+        json={"name": "Test Student", "phone_number": "+1-555-0199"},
+    )
+    assert response.status_code == 200
+    assert response.json()["phone_number"] == "+1-555-0199"
 
 async def test_get_student(client):
     post_response = await client.post("/students/", json={"name": "Test Student"})
@@ -78,8 +118,15 @@ async def test_get_student_courses(client):
     student_response = await client.post("/students/", json={"name": "Course Student"})
     student_id = student_response.json()["id"]
 
-    math_response = await client.post("/courses/", json={"name": "Math"})
-    science_response = await client.post("/courses/", json={"name": "Science"})
+    course_defaults = {"department": "Math", "credits": 3, "max_capacity": 30}
+    math_response = await client.post(
+        "/courses/",
+        json={"name": "Math", "instructor_name": "Dr. Smith", **course_defaults},
+    )
+    science_response = await client.post(
+        "/courses/",
+        json={"name": "Science", "instructor_name": "Dr. Jones", **course_defaults},
+    )
 
     await client.post(
         "/enrollments/",
