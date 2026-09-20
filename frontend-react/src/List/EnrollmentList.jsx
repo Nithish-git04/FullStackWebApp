@@ -29,7 +29,7 @@ function EnrollmentList({ enrollments }) {
     return (
         <ul>
             {enrollments.length === 0 ? (
-                <li>No enrollments yet</li>
+                <li className="status-message">No enrollments yet</li>
             ) : (
                 enrollments.map((enrollment) => (
                     <li key = {enrollment.id}>
@@ -48,7 +48,7 @@ function EnrollmentList({ enrollments }) {
                             </form>
                         ) : (
                             <>
-                                {`Student with the ID ${enrollment.student_id} has registered the course with the ID ${enrollment.course_id} and has a grade ${enrollment.grade} (${enrollment.letter_grade})`}
+                                {`${enrollment.student.name} (Student ID: ${enrollment.student_id}) is enrolled in ${enrollment.course.name} (Course ID: ${enrollment.course_id}) with a grade of ${enrollment.grade} (${enrollment.letter_grade})`}
                                 <button onClick={() => {
                                     setEditId(enrollment.id);
                                     reset({
@@ -60,7 +60,12 @@ function EnrollmentList({ enrollments }) {
                             </>
                         )}
                         <button
-                            onClick={() => deleteEnrollment(enrollment.id)}
+                            className="btn-danger"
+                            onClick={() => {
+                                if (window.confirm(`Delete this enrollment (student ${enrollment.student_id}, course ${enrollment.course_id})? This cannot be undone.`)) {
+                                    deleteEnrollment(enrollment.id);
+                                }
+                            }}
                         >
                             Delete
                         </button>

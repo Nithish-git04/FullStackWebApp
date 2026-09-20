@@ -5,6 +5,7 @@ export function showError(containerId, message = "Something wrong bruvv ToT. Ope
     
     const errMsg = document.createElement('p');
     errMsg.textContent = message;
+    errMsg.style.color = "#b00020";
     container.appendChild(errMsg);
 }
 
@@ -15,6 +16,8 @@ export function showLoading(divId, message = "Loading..") {
 
     const loadPara = document.createElement('p');
     loadPara.textContent = message;
+    loadPara.style.color = "#777";
+    loadPara.style.fontStyle = "italic";
 
     container.appendChild(loadPara);
 }

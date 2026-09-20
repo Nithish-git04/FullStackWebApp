@@ -1,7 +1,16 @@
 from databases import get_session
 from fastapi import APIRouter, Depends, HTTPException
-from models import Course, Enrollment, EnrollmentIn, EnrollmentOut, Student, User
+from models import (
+    Course,
+    Enrollment,
+    EnrollmentIn,
+    EnrollmentOut,
+    EnrollmentWithStudentAndCourse,
+    Student,
+    User,
+)
 from routers.auth import get_current_user
+from sqlalchemy.orm import selectinload
 from sqlmodel import select
 from sqlmodel.ext.asyncio.session import AsyncSession
 
@@ -82,8 +91,11 @@ async def delete_entry(enrollment_id : int, session : AsyncSession = Depends(get
     await session.delete(db_enrollment)
     await session.commit()
 
-@router.get("/", status_code = 200, response_model = list[EnrollmentOut])
+@router.get("/", status_code = 200, response_model = list[EnrollmentWithStudentAndCourse])
 async def get_all_enrollments(session : AsyncSession = Depends(get_session), current_user : User = Depends(get_current_user)):
-    enrollments = await session.exec(select(Enrollment))
+    enrollments = await session.exec(
+        select(Enrollment)
+        .options(selectinload(Enrollment.student), selectinload(Enrollment.course))
+    )
     enrollments = enrollments.all()
     return enrollments

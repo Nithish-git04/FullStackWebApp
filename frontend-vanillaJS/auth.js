@@ -5,6 +5,11 @@ import { getAllCourses, getAllStudents, createEnrollment, createEntity } from ".
 export async function signIn(username, password) {
     try {
 
+        if (!username.trim() || !password.trim()) {
+            showError("#main-div", "Please enter both a username and password.");
+            return;
+        }
+
         const mainDiv = document.querySelector('#main-div');
         mainDiv.innerHTML = "";
 
@@ -15,12 +20,15 @@ export async function signIn(username, password) {
         body.append("password", password);
 
         const response = await fetch(`${BASEURL}auth/token`, {
-            method : "POST", 
+            method : "POST",
             headers : {"Content-Type" : "application/x-www-form-urlencoded"},
             body : body
         });
 
-        if (!response.ok) throw new Error(response.status);
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.detail || "Incorrect username or password.");
+        }
 
         const responseData = await response.json();
 
@@ -107,13 +115,18 @@ export async function signIn(username, password) {
         });
 
     } catch(err) {
-        showError("#main-div");
+        showError("#main-div", err.message || undefined);
         console.log(err);
     }
 }
 
 export async function signUp(username, password) {
     try {
+
+        if (!username.trim() || !password.trim()) {
+            showError("#main-div", "Please enter both a username and password.");
+            return;
+        }
 
         const data = {username, password};
         const response = await fetch(`${BASEURL}auth/signup`, {
@@ -122,14 +135,17 @@ export async function signUp(username, password) {
             body : JSON.stringify(data)
             });
 
-        if(!response.ok) throw new Error(response.status);
+        if(!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.detail || "Signup failed. Please try again.");
+        }
 
         const responseData = await response.json();
         console.log(responseData);
-        alert("user created, proceed with login");
+        alert("Account created! You can now log in with the same username and password.");
 
     } catch(err) {
-        showError("#main-div");
+        showError("#main-div", err.message || undefined);
         console.log(err);
     }
 }

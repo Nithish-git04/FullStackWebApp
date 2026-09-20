@@ -8,15 +8,16 @@ function CoursesPage() {
     return (
         <>
             {isLoading ? (
-                <p>Loading courses...</p>
+                <p className="status-message">Loading courses...</p>
             ) : error ? (
-                <p>{`Error while fetching: ${error}`}</p>
+                <p className="error">{`Error while fetching: ${error}`}</p>
             ) : (
                 <>
                     <h2>Create Course:</h2>
                     <CourseManager />
 
                     <h2>Course List:</h2>
+                    <p className="list-caption">Click a course to view its details and enrolled students.</p>
                     <CourseList courses={courses} />
                 </>
             )}

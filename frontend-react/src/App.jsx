@@ -7,6 +7,7 @@ import NotFoundPage from "./Page/NotFoundPage"
 import { Route, Routes, Link, useNavigate } from "react-router"
 import LoginPage from "./Page/LoginPage"
 import ProtectedRoute from "./ProtectedRoute"
+import GuestRoute from "./GuestRoute"
 import { useContext } from "react"
 import { AuthContext } from "./AuthContext"
 import SignupPage from "./Page/SignupPage"
@@ -36,8 +37,8 @@ function App() {
       </nav>
 
       <Routes>
-        <Route path="/signup" element={<SignupPage />}/>
-        <Route path="/" element={<LoginPage />}/>
+        <Route path="/signup" element={<GuestRoute><SignupPage /></GuestRoute>}/>
+        <Route path="/" element={<GuestRoute><LoginPage /></GuestRoute>}/>
         <Route path="/students/:id" element={<ProtectedRoute><StudentDetailPage /></ProtectedRoute>} />
         <Route path="/courses/:id" element={<ProtectedRoute><CourseDetailPage /></ProtectedRoute>} />
         <Route path="/students" element={<ProtectedRoute><StudentsPage /></ProtectedRoute>} />

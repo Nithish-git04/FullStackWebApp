@@ -32,8 +32,8 @@ function CourseList({ courses }) {
 
     return (
         <ul>
-            {courses.length === 0 ? 
-                <li> No courses yet </li> :
+            {courses.length === 0 ?
+                <li className="status-message"> No courses yet </li> :
                 courses.map((course) => (
                     <li key = {course.id}>
                         {editId === course.id ? (
@@ -58,7 +58,16 @@ function CourseList({ courses }) {
                                 </button>
                             </>
                         )}
-                        <button onClick={() => deleteCourse(course.id)}>Delete</button>
+                        <button
+                            className="btn-danger"
+                            onClick={() => {
+                                if (window.confirm(`Delete the course "${course.name}"? This cannot be undone.`)) {
+                                    deleteCourse(course.id);
+                                }
+                            }}
+                        >
+                            Delete
+                        </button>
                     </li>
                 ))
             }

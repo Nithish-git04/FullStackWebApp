@@ -8,9 +8,9 @@ function EnrollmentsPage() {
     return (
         <>
             {isLoading ? (
-                <p>Loading enrollments...</p>
+                <p className="status-message">Loading enrollments...</p>
             ) : error ? (
-                <p>{`Error while fetching: ${error}`}</p>
+                <p className="error">{`Error while fetching: ${error}`}</p>
             ) : (
                 <>
                     <h2>Enroll a student:</h2>

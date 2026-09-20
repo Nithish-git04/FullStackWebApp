@@ -8,8 +8,11 @@ export function useLogin() {
                 method: "POST",
                 headers: {"Content-Type" : "application/x-www-form-urlencoded"},
                 body: new URLSearchParams({ username, password })
-            }).then((res) => {
-                if (!res.ok) throw new Error(`Login failed. Err: ${res.status}`)
+            }).then(async (res) => {
+                if (!res.ok) {
+                    const errorData = await res.json().catch(() => ({}));
+                    throw new Error(errorData.detail || "Incorrect username or password.");
+                }
                 return res.json()
             })
         } 

@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../AuthContext";
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
 import { useLogin } from "../Hooks/useLogin";
 
 function LoginPage() {
@@ -11,12 +11,15 @@ function LoginPage() {
     const { login } = useContext(AuthContext);
     const { mutate, error : errorLogin} = useLogin();
 
+    const canSubmit = username.trim() !== "" && password.trim() !== "";
+
     function handleSubmit(e) {
         e.preventDefault();
+        if (!canSubmit) return;
         mutate(
-            { username: username, password: password }, 
+            { username: username, password: password },
             { onSuccess: (data) => {
-                login(data.access_token); 
+                login(data.access_token);
                 navigate("/students")
             }}
         )
@@ -30,9 +33,14 @@ function LoginPage() {
                 <input id="username" value={username} onChange={(e) => setUsername(e.target.value)}/>
                 <label htmlFor="password">Password:</label>
                 <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-                <button type="submit">Submit</button>
+                <button type="submit" disabled={!canSubmit}>Submit</button>
             </form>
-            {errorLogin && <p>Login failed.</p>}
+
+            {errorLogin && <p className="error">{errorLogin.message}</p>}
+
+            <p className="auth-hint">
+                Don't have an account? <Link to="/signup">Sign up</Link>
+            </p>
         </>
     )
 }

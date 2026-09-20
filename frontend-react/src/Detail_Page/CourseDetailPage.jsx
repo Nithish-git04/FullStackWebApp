@@ -6,9 +6,9 @@ function CourseDetailPage() {
     const { id } = useParams();
     const { course, students, errCour, errStuds } = useCourse(id);
 
-    if(!course && !errCour) return <p>Loading course details...</p>
+    if(!course && !errCour) return <p className="status-message">Loading course details...</p>
 
-    return( 
+    return(
         <>
 
             <Link to="/courses">Back to courses</Link>
@@ -16,7 +16,7 @@ function CourseDetailPage() {
             <h3>Course Details:</h3>
 
             {errCour ? (
-                <p>Error fetching Course</p>
+                <p className="error">Error fetching Course</p>
             ) : (
                 <ul>
                     <li key={course.id}>{`Name: ${course.name}, Id: ${id}, Instructor: ${course.instructor_name}, Department: ${course.department}, Credits: ${course.credits}, Capacity: ${course.max_capacity}`}</li>
@@ -26,14 +26,14 @@ function CourseDetailPage() {
             <h3>Registered Students:</h3>
 
             {errStuds ? (
-                <p>Error fetching Students</p>
+                <p className="error">Error fetching Students</p>
             ) : (
                 <ul>
                     {students.length === 0 ? (
-                        <li>No registrations yet</li>
+                        <li className="status-message">No registrations yet</li>
                     ) : (
                         students.map((enrollment) => (
-                            <li key={enrollment.id}>{`Student ID: ${enrollment.student_id} -> ${enrollment.student.name} -> Grade: ${enrollment.grade} (${enrollment.letter_grade})`}</li>
+                            <li key={enrollment.id}>{`${enrollment.student.name} (Student ID: ${enrollment.student_id}) — Grade: ${enrollment.grade} (${enrollment.letter_grade})`}</li>
                         ))
                     )}
                 </ul>

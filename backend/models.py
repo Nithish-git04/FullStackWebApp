@@ -62,6 +62,9 @@ class EnrollmentWithStudent(EnrollmentOut):
     student : StudentOut
 class EnrollmentWithCourse(EnrollmentOut):
     course : CourseOut
+class EnrollmentWithStudentAndCourse(EnrollmentOut):
+    student : StudentOut
+    course : CourseOut
 class Enrollment(EnrollmentBase, table = True):
     id : int | None = Field(default = None, primary_key = True)
     student_id : int = Field(foreign_key = "student.id")

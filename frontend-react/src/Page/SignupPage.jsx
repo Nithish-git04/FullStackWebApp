@@ -7,9 +7,11 @@ function SignupPage() {
     const [error, setError] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
     const navigate = useNavigate();
+    const canSubmit = username.trim() !== "" && password.trim() !== "";
 
     async function handleSubmit(e) {
         e.preventDefault();
+        if (!canSubmit) return;
         setError("");
         setIsSubmitting(true);
 
@@ -52,14 +54,14 @@ function SignupPage() {
                     onChange={(e) => setPassword(e.target.value)}
                 />
 
-                <button type="submit" disabled={isSubmitting}>
+                <button type="submit" disabled={isSubmitting || !canSubmit}>
                     {isSubmitting ? "Creating account..." : "Create account"}
                 </button>
             </form>
 
-            {error && <p>{error}</p>}
+            {error && <p className="error">{error}</p>}
 
-            <p>
+            <p className="auth-hint">
                 Already have an account? <Link to="/">Login</Link>
             </p>
         </>

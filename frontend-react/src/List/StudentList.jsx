@@ -23,8 +23,8 @@ function StudentList({ students }) {
 
     return (
         <ul>
-            {(students.length === 0) ? 
-                <li> No students yet </li> : 
+            {(students.length === 0) ?
+                <li className="status-message"> No students yet </li> :
                 students.map((student) => (
                     <li key={student.id}>
                     {editingId === student.id ? (
@@ -47,7 +47,16 @@ function StudentList({ students }) {
                             </button>
                         </>
                     )}
-                    <button onClick={() => deleteStudent(student.id)}>Delete</button>
+                    <button
+                        className="btn-danger"
+                        onClick={() => {
+                            if (window.confirm(`Delete ${student.name}? This cannot be undone.`)) {
+                                deleteStudent(student.id);
+                            }
+                        }}
+                    >
+                        Delete
+                    </button>
                     </li>
                 ))}
             {updateError && <li>{updateError.message}</li>}

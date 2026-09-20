@@ -79,7 +79,7 @@ async function getStudentEnrollments(id, token, name) {
 
                 tempDiv.dataset.id = item.id;
 
-                course_id.textContent = "Course ID: " + item.course_id;
+                course_id.textContent = item.course.name + " (Course ID: " + item.course_id + ")";
                 grade.textContent = "Grade: " + item.grade + " (" + item.letter_grade + ")";
 
                 enrUl.appendChild(course_id);
@@ -89,7 +89,7 @@ async function getStudentEnrollments(id, token, name) {
 
                 tempDiv.style.border = "2px solid black";
                 tempDiv.style.borderRadius = "10px";
-                tempDiv.style.maxWidth = "150px";
+                tempDiv.style.maxWidth = "220px";
                 tempDiv.style.display = "flex";
                 tempDiv.style.alignItems = "center";
 
@@ -98,6 +98,8 @@ async function getStudentEnrollments(id, token, name) {
         } else {
             const emptyPara = document.createElement('p');
             emptyPara.textContent = "No enrollments yet!";
+            emptyPara.style.color = "#777";
+            emptyPara.style.fontStyle = "italic";
             enrDiv.appendChild(emptyPara);
         }
         
@@ -137,6 +139,12 @@ export async function getAllStudents(token) {
         allStuDiv.appendChild(head);
 
         if(responseData.length !== 0) {
+            const caption = document.createElement('p');
+            caption.textContent = "Click a student to view the courses they're enrolled in.";
+            caption.style.color = "#555";
+            caption.style.fontStyle = "italic";
+            caption.style.fontSize = "0.85em";
+            allStuDiv.appendChild(caption);
             responseData.forEach(item => {
                 const tempListItem = document.createElement('li');
                 tempListItem.textContent = `${item.id} : ${item.name}${item.email ? ` (${item.email})` : ""}${item.phone_number ? ` [${item.phone_number}]` : ""}`;
@@ -152,6 +160,8 @@ export async function getAllStudents(token) {
         } else {
             const emptyPara = document.createElement('p');
             emptyPara.textContent = "No students yet!";
+            emptyPara.style.color = "#777";
+            emptyPara.style.fontStyle = "italic";
             allStuDiv.appendChild(emptyPara);
         }
 
@@ -221,7 +231,7 @@ async function getEnrolledStudents(id, token, name) {
 
                 tempDiv.dataset.id = item.id;
 
-                stuId.textContent = `Student ID: ${item.student_id}`;
+                stuId.textContent = `${item.student.name} (Student ID: ${item.student_id})`;
                 grade.textContent = `Grade : ${item.grade} (${item.letter_grade})`;
 
                 enrUl.appendChild(stuId);
@@ -231,7 +241,7 @@ async function getEnrolledStudents(id, token, name) {
 
                 tempDiv.style.border = "2px solid black";
                 tempDiv.style.borderRadius = "10px";
-                tempDiv.style.maxWidth = "150px";
+                tempDiv.style.maxWidth = "220px";
                 tempDiv.style.display = "flex";
                 tempDiv.style.alignItems = "center";
 
@@ -240,6 +250,8 @@ async function getEnrolledStudents(id, token, name) {
         } else {
             const emptyPara = document.createElement('p');
             emptyPara.textContent = "No students yet!";
+            emptyPara.style.color = "#777";
+            emptyPara.style.fontStyle = "italic";
             enrStuDIv.appendChild(emptyPara);
         }
 
@@ -279,6 +291,12 @@ export async function getAllCourses(token) {
         courDiv.appendChild(head);
 
         if(responseData.length !== 0) {
+            const caption = document.createElement('p');
+            caption.textContent = "Click a course to view the students enrolled in it.";
+            caption.style.color = "#555";
+            caption.style.fontStyle = "italic";
+            caption.style.fontSize = "0.85em";
+            courDiv.appendChild(caption);
             responseData.forEach(item => {
                 const tempListItem = document.createElement('li');
                 tempListItem.textContent = `${item.id} : ${item.name} (Instructor: ${item.instructor_name}, Dept: ${item.department}, Credits: ${item.credits}, Capacity: ${item.max_capacity})`;
@@ -294,6 +312,8 @@ export async function getAllCourses(token) {
         } else {
             const emptyPara = document.createElement('p');
             emptyPara.textContent = "No courses yet!";
+            emptyPara.style.color = "#777";
+            emptyPara.style.fontStyle = "italic";
             courDiv.appendChild(emptyPara);
         }
 

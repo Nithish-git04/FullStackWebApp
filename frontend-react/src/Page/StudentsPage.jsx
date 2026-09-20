@@ -9,15 +9,16 @@ function StudentsPage() {
     return (
         <>
             {isLoading ? (
-                <p>Loading students...</p>
+                <p className="status-message">Loading students...</p>
             ) : error ? (
-                <p>{`Error while fetching: ${error}`}</p>
+                <p className="error">{`Error while fetching: ${error}`}</p>
             ) : (
                 <>
                     <h2>Create Student:</h2>
                     <StudentManager students={students} />
 
                     <h2>Student List:</h2>
+                    <p className="list-caption">Click a student to view their details and enrolled courses.</p>
                     <StudentList students={students} />
                 </>
             )}
