@@ -1,3 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student &amp; Course Manager</title>
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 16px;
+            font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+        }
+
+        @media (min-width: 640px) {
+            body {
+                max-width: 640px;
+                margin: 0 auto;
+            }
+        }
+
+        input, button, select {
+            font-size: 16px; /* stops iOS Safari from zooming in on focus */
+            max-width: 100%;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            overflow-wrap: anywhere;
+            margin-bottom: 4px;
+        }
+
+        .form-row {
+            display: flex;
+            flex-direction: row;
+        }
+
+        @media (max-width: 480px) {
+            .form-row {
+                flex-direction: column;
+                align-items: flex-start;
+                row-gap: 2px;
+                margin-bottom: 6px;
+            }
+
+            .form-row input {
+                width: 100%;
+            }
+
+            #login, #signup {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
 <div id="input-details" style="display: flex; align-items: center; flex-direction: column; row-gap: 5px;">
     <div>
         <label for="username">Username: </label>
@@ -7,7 +68,7 @@
         <label for="password">Password: </label>
         <input id="password" placeholder="Enter the password" name="password" type="text">
     </div>
-    
+
     <button id="login" style="background:#2563eb; color:#fff; border:none; padding:6px 16px; border-radius:4px; cursor:pointer; font-weight:600;">Login</button>
     <button id="signup" style="background:transparent; color:#2563eb; border:1px solid #2563eb; padding:6px 16px; border-radius:4px; cursor:pointer;">Sign up</button>
 
@@ -20,15 +81,15 @@
 <div id="crea-stu-div" style="display: none; flex-direction: column">
     <form style="display: flex; align-items: center; flex-direction: column; row-gap: 5px;">
         <h3>CREATE A STUDENT ENTRY</h3>
-        <span style="display: flex; flex-direction: row;">
+        <span class="form-row">
         <label for="create-user">Name:  </label>
         <input id="create-user" type="text" placeholder="Enter the name of the student">
         </span>
-        <span style="display: flex; flex-direction: row;">
+        <span class="form-row">
         <label for="create-user-email">Email:  </label>
         <input id="create-user-email" type="email" placeholder="Enter the email of the student">
         </span>
-        <span style="display: flex; flex-direction: row;">
+        <span class="form-row">
         <label for="create-user-phone">Phone Number:  </label>
         <input id="create-user-phone" type="tel" placeholder="Enter the phone number of the student">
         </span>
@@ -39,23 +100,23 @@
 <div id="crea-cour-div" style="display: none; flex-direction: column">
     <form style="display: flex; align-items: center; flex-direction: column; row-gap: 5px;">
         <h3>CREATE A COURSE</h3>
-        <span style="display: flex; flex-direction: row;">
+        <span class="form-row">
         <label for="create-course">Name:  </label>
         <input id="create-course" type="text" placeholder="Enter the name of the course">
         </span>
-        <span style="display: flex; flex-direction: row;">
+        <span class="form-row">
         <label for="create-course-instructor">Instructor Name:  </label>
         <input id="create-course-instructor" type="text" placeholder="Enter the instructor's name">
         </span>
-        <span style="display: flex; flex-direction: row;">
+        <span class="form-row">
         <label for="create-course-department">Department:  </label>
         <input id="create-course-department" type="text" placeholder="Enter the department">
         </span>
-        <span style="display: flex; flex-direction: row;">
+        <span class="form-row">
         <label for="create-course-credits">Credits:  </label>
         <input id="create-course-credits" type="number" min="1" max="10" placeholder="Enter the number of credits">
         </span>
-        <span style="display: flex; flex-direction: row;">
+        <span class="form-row">
         <label for="create-course-capacity">Max Capacity:  </label>
         <input id="create-course-capacity" type="number" min="1" placeholder="Enter the max capacity">
         </span>
@@ -66,15 +127,15 @@
 <div id="crea-enroll-div" style="display: none; flex-direction: column">
     <form style="display: flex; align-items: center; flex-direction: column; row-gap: 5px;">
         <h3>ENROLL A STUDENT</h3>
-        <span style="display: flex; flex-direction: row;">
+        <span class="form-row">
         <label for="stu-id-inp">Student ID:</label>
         <input id="stu-id-inp" type="text" placeholder="Enter the student ID">
         </span>
-        <span style="display: flex; flex-direction: row;">
+        <span class="form-row">
         <label for="cour-id-inp">Course ID:</label>
         <input id="cour-id-inp" type="text" placeholder="Enter the course ID">
         </span>
-        <span style="display: flex; flex-direction: row;">
+        <span class="form-row">
         <label for="grade-inp">Grade:</label>
         <input id="grade-inp" type="number" placeholder="Enter the student's grade">
         </span>
@@ -93,3 +154,5 @@
 
 
 <script src="main.js" type="module"></script>
+</body>
+</html>

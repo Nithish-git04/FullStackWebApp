@@ -219,6 +219,7 @@ li {
   border: 1px solid var(--border);
   border-width: 1px 0 0;
   margin-bottom: 0;
+  overflow-wrap: anywhere;
 }
 
 li:last-child {
@@ -229,6 +230,7 @@ li a {
   color: var(--ink);
   font-weight: 500;
   flex: 1;
+  overflow-wrap: anywhere;
 }
 
 li a:hover {
@@ -305,6 +307,10 @@ section, .detail-card {
     flex-wrap: wrap;
   }
 
+  nav a {
+    padding: 0.35rem 0;
+  }
+
   nav button {
     margin-left: 0;
   }
@@ -320,6 +326,15 @@ section, .detail-card {
     width: 100%;
   }
 
+  /* 16px stops iOS Safari from auto-zooming in when a field is focused */
+  input, select, textarea {
+    font-size: 16px;
+  }
+
+  button {
+    padding: 0.65rem 1rem;
+  }
+
   li {
     align-items: flex-start;
     flex-wrap: wrap;
@@ -327,5 +342,19 @@ section, .detail-card {
 
   li a {
     min-width: 100%;
+  }
+
+  li button {
+    padding: 0.55rem 0.9rem;
+  }
+}
+
+@media (max-width: 380px) {
+  h2 {
+    font-size: 1.45rem;
+  }
+
+  nav {
+    gap: 0.6rem;
   }
 }
