@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router";
+import { parseErrorDetail } from "../api";
 
 function SignupPage() {
     const [username, setUsername] = useState("");
@@ -13,18 +14,32 @@ function SignupPage() {
         e.preventDefault();
         if (!canSubmit) return;
         setError("");
+
+        const trimmedUsername = username.trim();
+        const trimmedPassword = password.trim();
+
+        if (trimmedUsername.length < 5) {
+            setError("Username must be at least 5 characters long.");
+            return;
+        }
+
+        if (trimmedPassword.length < 8) {
+            setError("Password must be at least 8 characters long.");
+            return;
+        }
+
         setIsSubmitting(true);
 
         try {
             const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/signup`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username, password }),
+                body: JSON.stringify({ username: trimmedUsername, password: trimmedPassword }),
             });
 
             if (!response.ok) {
                 const errorData = await response.json().catch(() => ({}));
-                throw new Error(errorData.detail || "Signup failed.");
+                throw new Error(parseErrorDetail(errorData.detail, "Signup failed."));
             }
 
             navigate("/");

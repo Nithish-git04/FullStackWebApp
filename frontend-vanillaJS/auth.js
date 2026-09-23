@@ -1,4 +1,4 @@
-import { showError, showLoading } from "./ui.js";
+import { showError, showLoading, parseErrorDetail } from "./ui.js";
 import { BASEURL } from "./config.js";
 import { getAllCourses, getAllStudents, createEnrollment, createEntity } from "./api.js";
 
@@ -27,7 +27,7 @@ export async function signIn(username, password) {
 
         if (!response.ok) {
             const errorData = await response.json().catch(() => ({}));
-            throw new Error(errorData.detail || "Incorrect username or password.");
+            throw new Error(parseErrorDetail(errorData.detail, "Incorrect username or password."));
         }
 
         const responseData = await response.json();
@@ -123,12 +123,25 @@ export async function signIn(username, password) {
 export async function signUp(username, password) {
     try {
 
-        if (!username.trim() || !password.trim()) {
+        const trimmedUsername = username.trim();
+        const trimmedPassword = password.trim();
+
+        if (!trimmedUsername || !trimmedPassword) {
             showError("#main-div", "Please enter both a username and password.");
             return;
         }
 
-        const data = {username, password};
+        if (trimmedUsername.length < 5) {
+            showError("#main-div", "Username must be at least 5 characters long.");
+            return;
+        }
+
+        if (trimmedPassword.length < 8) {
+            showError("#main-div", "Password must be at least 8 characters long.");
+            return;
+        }
+
+        const data = {username : trimmedUsername, password : trimmedPassword};
         const response = await fetch(`${BASEURL}auth/signup`, {
             method : "POST",
             headers : {"Content-Type" : "application/json"},
@@ -137,7 +150,7 @@ export async function signUp(username, password) {
 
         if(!response.ok) {
             const errorData = await response.json().catch(() => ({}));
-            throw new Error(errorData.detail || "Signup failed. Please try again.");
+            throw new Error(parseErrorDetail(errorData.detail, "Signup failed. Please try again."));
         }
 
         const responseData = await response.json();

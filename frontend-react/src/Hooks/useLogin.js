@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query"
-import apiFetch from "../api"
+import apiFetch, { parseErrorDetail } from "../api"
 
 export function useLogin() {
     return useMutation({
@@ -11,10 +11,10 @@ export function useLogin() {
             }).then(async (res) => {
                 if (!res.ok) {
                     const errorData = await res.json().catch(() => ({}));
-                    throw new Error(errorData.detail || "Incorrect username or password.");
+                    throw new Error(parseErrorDetail(errorData.detail, "Incorrect username or password."));
                 }
                 return res.json()
             })
-        } 
+        }
     })
 }
